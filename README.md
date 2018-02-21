@@ -35,7 +35,6 @@
     - [v-for with a Range](#v-for-with-a-range)
     - [v-for on a ```<template>```](#v-for-on-a-template)
     - [v-for with v-if](#v-for-with-v-if)
-    - [v-for with Components](#v-for-with-components)
   - [Event Handling](#event-handling)
   - [Form Input Bindings](#form-input-bindings)
   - [Components](#components)
@@ -62,6 +61,16 @@
     - [Dynamic Components](#dynamic-components)
     - [Other stuffs](#other-stuffs)
     - [Note](#note)
+  - [Reactivity in Depth](#reactivity-in-depth)
+  - [Some best practices I might forget](#some-best-practices-i-might-forget)
+    - [Avoid ```v-if``` with ```v-for```](#avoid-v-if-with-v-for)
+    - [Private property names](#private-property-names)
+    - [Tightly coupled component names](#tightly-coupled-component-names)
+    - [Order of words in component names](#order-of-words-in-component-names)
+    - [Prop name casing](#prop-name-casing)
+    - [Simple computed properties](#simple-computed-properties)
+    - [Component/instance options order](#componentinstance-options-order)
+    - [Element attribute order](#element-attribute-order)
 
 ## Vue Instance
 
