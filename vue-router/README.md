@@ -193,7 +193,7 @@ Too lazy so just drop the link [here](https://router.vuejs.org/en/essentials/red
 
 Không nên dùng ```$route``` vì sẽ khiến component tight coupling với route
 
--> Dùng ```props``` property của route (3 mode: boolean mode, object mode, funciton mode)
+-> Dùng ```props``` property của route (3 mode: boolean mode, object mode, function mode)
 
 <https://router.vuejs.org/en/essentials/passing-props.html>
 
@@ -203,7 +203,23 @@ Không nên dùng ```$route``` vì sẽ khiến component tight coupling với r
 
 ### Navigation Guards
 
-<https://router.vuejs.org/en/advanced/navigation-guards.html>
+#### 3 places to guard route
+
+Global:
+
+- beforeEach
+- afterEach
+- beforeResolve
+
+Per-route: beforeEnter
+
+In-component:
+
+- beforeRouteEnter
+- beforeRouteUpdate
+- beforeRouteLeave
+
+Note: params, query thay đổi k trigger enter/leave navigation guard -> phải **watch $route** hoặc dùng **beforeRouteUpdate** hook trong component
 
 #### The Full Navigation Resolution Flow
 

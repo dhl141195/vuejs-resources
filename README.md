@@ -270,7 +270,7 @@ var vm = new Vue({
 })
 ```
 
-Note: Thông thường nên sử dụng Computed Props. Chỉ sử dụng Watchers khi Computed Props không đáp ứng được yêu cầu. Watchers thường được dùng khi cần thực hiện async action
+Note: Thông thường nên sử dụng Computed Props. Chỉ sử dụng Watchers khi Computed Props không đáp ứng được yêu cầu. Watchers thường được dùng khi cần thực hiện async c
 
 ## Class and Style Bindings
 
@@ -316,8 +316,6 @@ computed: {
   }
 }
 ```
-
-TODO: Class name trong component
 
 ### Binding Inline Styles
 
@@ -425,7 +423,7 @@ Tương tự v-for
 
 ### Key
 
-TODO: check other resource about this topic
+Khi render một list các element Vue sử dụng **in-place patch strategy**. Khi thứ tự của các element thay đổi, thay vì di chuyển các element, Vue sẽ update từng index, tạo mới hoàn toàn element (nếu cần) để khớp với VDOM. Khác với React, Vue cho rằng điều này là tốt cho hiệu năng (FIXME). Nhưng sẽ không phù hợp nếu muốn giữ lại state của các component -> phải dùng ```key``` để Vue có thể reuse, reorder các element.
 
 Source: <https://vuejs.org/v2/guide/list.html#key>
 
@@ -840,7 +838,7 @@ const vm = new Vue({
 
 #### Scoped Slots
 
-Dùng để render children data trên template của parent. Giống render props pattern trong react // FIXME
+Dùng để render children data trên template của parent
 
 ```html
 <my-component>
@@ -871,7 +869,7 @@ const vm = new Vue({
 ```html
 <div id="example">
   <button v-on:click="switchComponent">Switch component</button>
-  <component v-bind:is="currentComponent"></componentt>
+  <component v-bind:is="currentComponent"></component>
 </div>
 ```
 
@@ -914,9 +912,24 @@ Note: Có thể wrap ```<component>``` bằng ```<keep-alive>``` để giữ sta
 
 ## Reactivity in Depth
 
-### How Changes Are Tracked
+Khi truyền 1 object vào **data** option của Vue instance, Vue sẽ dùng [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) để convert các prop của object thành các getter/setter. Các getter/setter này cho Vue khả năng **dependency-tracking (inside getter)** và  **change-notification (inside setter)**.
 
-TODO: do some research later
+```js
+Object.defineProperty(obj, 'a', {
+  get() {
+    console.log('I have been touched');
+    return a;
+  },
+  set(value) {
+    console.log('I have been set');
+    a = value;
+  }
+});
+```
+
+Vue chỉ convert các root prop của **data** option một lần duy nhất khi init instance. Vì vậy phải định nghĩa trước các root prop cần dùng. Còn đối với nested prop thì có thể dùng ```Vue.set()``` hoặc ```vm.$set()``` để add thêm -> ```set()``` wrap ```Object.defineProperty()```
+
+Mỗi một Vue instance có một **watcher** tương ứng. Thay vì trigger re-render trực tiếp khi data thay đổi, Vue sử dụng các **watcher** này để tăng hiệu năng. Khi render, **watcher** sẽ lưu lại các data cần sử dụng (dependency) thông qua các getter. Và khi các dependency thay đổi (setter được gọi), **watcher** sẽ trigger re-render. Như vậy chỉ có các data cần sử dụng mới được track.
 
 ![data change](../images/data.png)
 
